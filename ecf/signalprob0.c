@@ -37,7 +37,7 @@ int main()
 
     Sigfillset(&mask);
     Sigprocmask(SIG_BLOCK, &mask, &prev_mask);  /* Block sigs */
-    printf("%ld", ++counter);
+    printf("%ld\n", ++counter);
     Sigprocmask(SIG_SETMASK, &prev_mask, NULL); /* Restore sigs */
 
     exit(0);

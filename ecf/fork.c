@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: Yzc258
+ * @Date: 2022-06-17 14:00:18
+ */
 #include "csapp.h"
 
 /* $begin fork */
@@ -10,7 +16,7 @@ int main()
     pid = Fork(); //line:ecf:forkreturn
     if (pid == 0) {  /* Child */
 	printf("child : x=%d\n", ++x); //line:ecf:childprint
-	exit(0);
+	//exit(0);
     }
 
     /* Parent */

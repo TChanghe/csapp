@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "vector.h": "c",
+        "dlfcn.h": "c",
+        "csapp.h": "c",
+        "wait.h": "c"
+    }
+}

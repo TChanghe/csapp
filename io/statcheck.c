@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: Yzc258
+ * @Date: 2022-07-24 14:40:28
+ */
 /* $begin statcheck */
 #include "csapp.h"
 
@@ -24,7 +30,7 @@ int main (int argc, char **argv)
     else
 	readok = "no";
 
-    printf("type: %s, read: %s\n", type, readok);
+    printf("type: %s, read: %s, stat.st_mode:%x, S_IRUSR:%x, %x, %x\n", type, readok, stat.st_mode, S_IRUSR, S_IWUSR, S_IXUSR);
     exit(0);
 }
 /* $end statcheck */

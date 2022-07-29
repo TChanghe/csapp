@@ -1,12 +1,20 @@
+/*
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: Yzc258
+ * @Date: 2022-07-20 15:44:08
+ */
 #include "csapp.h"
 
 /* $begin signal2 */
 void handler2(int sig) 
 {
     int olderrno = errno;
+    int i = 0 ;
 
     while (waitpid(-1, NULL, 0) > 0) {
         Sio_puts("Handler reaped child\n");
+        printf("waitpid调用序号%d\n",i++);
     }
     if (errno != ECHILD)
         Sio_error("waitpid error");
