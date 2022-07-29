@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 	connfd = Accept(listenfd, (SA *) &clientaddr, &clientlen);
 	if (Fork() == 0) { 
 	    Close(listenfd); /* Child closes its listening socket */
+		printf("connfd :%d \n", connfd);
 	    echo(connfd);    /* Child services client */ //line:conc:echoserverp:echofun
 	    Close(connfd);   /* Child closes connection with client */ //line:conc:echoserverp:childclose
 	    exit(0);         /* Child exits */

@@ -36,6 +36,7 @@ void test_show_bytes(int val) {
     show_int(ival);
     show_float(fval);
     show_pointer(pval);
+    show_bytes("12345", 6); 
 }
 /* $end test-show-bytes */
 

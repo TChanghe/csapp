@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 
     /* Get a list of addrinfo records */
     memset(&hints, 0, sizeof(struct addrinfo));                         
-    hints.ai_family = AF_INET;       /* IPv4 only */        //line:netp:hostinfo:family
+    //hints.ai_family = AF_INET;       /* IPv4 only */        //line:netp:hostinfo:family
     hints.ai_socktype = SOCK_STREAM; /* Connections only */ //line:netp:hostinfo:socktype
     if ((rc = getaddrinfo(argv[1], NULL, &hints, &listp)) != 0) {
         fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(rc));
@@ -25,6 +25,8 @@ int main(int argc, char **argv)
     flags = NI_NUMERICHOST; /* Display address string instead of domain name */
     for (p = listp; p; p = p->ai_next) {
         Getnameinfo(p->ai_addr, p->ai_addrlen, buf, MAXLINE, NULL, 0, flags);
+        //printf("%d\n", p->ai_family);
+        //printf("%d\n", p->ai_socktype);
         printf("%s\n", buf);
     } 
 

@@ -13,7 +13,9 @@ void echo(int connfd)
     Rio_readinitb(&rio, connfd);
     while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) { //line:netp:echo:eof
 	printf("server received %d bytes\n", (int)n);
+    printf("fd %d \n", connfd);
 	Rio_writen(connfd, buf, n);
+    Rio_writen(1, buf, n);
     }
 }
 /* $end echo */

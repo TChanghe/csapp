@@ -17,14 +17,15 @@ int main()
     ptr = msgs; 
     for (i = 0; i < N; i++)  
         Pthread_create(&tid, NULL, thread, (void *)i); 
-    Pthread_exit(NULL); 
+    //Pthread_exit(NULL); 
+    pause();
 }
 
 void *thread(void *vargp) 
 {
     int myid = (int)vargp;
     static int cnt = 0; //line:conc:sharing:cntdec
-    printf("[%d]: %s (cnt=%d)\n", myid, ptr[myid], ++cnt); //line:conc:sharing:stack
+    printf("[%d]: %s , ptr : %x, (cnt=%d)\n", myid, ptr[myid], ptr, ++cnt); //line:conc:sharing:stack
     return NULL;
 }
 /* $end sharing */

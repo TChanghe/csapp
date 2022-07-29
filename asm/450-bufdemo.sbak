@@ -1,0 +1,184 @@
+	.file	"450-bufdemo.c"
+	.text
+	.globl	gets
+	.type	gets, @function
+gets:
+.LFB6:
+	.cfi_startproc
+	endbr64
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movq	%rdi, -24(%rbp)
+	movq	-24(%rbp), %rax
+	movq	%rax, -8(%rbp)
+	jmp	.L2
+.L4:
+	movq	-8(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -8(%rbp)
+	movl	-12(%rbp), %edx
+	movb	%dl, (%rax)
+.L2:
+	call	getchar@PLT
+	movl	%eax, -12(%rbp)
+	cmpl	$10, -12(%rbp)
+	je	.L3
+	cmpl	$-1, -12(%rbp)
+	jne	.L4
+.L3:
+	cmpl	$-1, -12(%rbp)
+	jne	.L5
+	movq	-8(%rbp), %rax
+	cmpq	-24(%rbp), %rax
+	jne	.L5
+	movl	$0, %eax
+	jmp	.L6
+.L5:
+	movq	-8(%rbp), %rax
+	leaq	1(%rax), %rdx
+	movq	%rdx, -8(%rbp)
+	movb	$0, (%rax)
+	movq	-24(%rbp), %rax
+.L6:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE6:
+	.size	gets, .-gets
+	.globl	echo
+	.type	echo, @function
+echo:
+.LFB7:
+	.cfi_startproc
+	endbr64
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%fs:40, %rax
+	movq	%rax, -8(%rbp)
+	xorl	%eax, %eax
+	leaq	-16(%rbp), %rax
+	movq	%rax, %rdi
+	call	gets
+	leaq	-16(%rbp), %rax
+	movq	%rax, %rdi
+	call	puts@PLT
+	nop
+	movq	-8(%rbp), %rax
+	subq	%fs:40, %rax
+	je	.L8
+	call	__stack_chk_fail@PLT
+.L8:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE7:
+	.size	echo, .-echo
+	.globl	good_echo
+	.type	good_echo, @function
+good_echo:
+.LFB8:
+	.cfi_startproc
+	endbr64
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movq	%fs:40, %rax
+	movq	%rax, -8(%rbp)
+	xorl	%eax, %eax
+	movq	stdin(%rip), %rdx
+	leaq	-16(%rbp), %rax
+	movl	$8, %esi
+	movq	%rax, %rdi
+	call	fgets@PLT
+	movq	%rax, -24(%rbp)
+	cmpq	$0, -24(%rbp)
+	je	.L12
+	movq	-24(%rbp), %rax
+	movq	%rax, %rdi
+	call	puts@PLT
+.L12:
+	nop
+	movq	-8(%rbp), %rax
+	subq	%fs:40, %rax
+	je	.L11
+	call	__stack_chk_fail@PLT
+.L11:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE8:
+	.size	good_echo, .-good_echo
+	.section	.rodata
+.LC0:
+	.string	"Type a string:"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB9:
+	.cfi_startproc
+	endbr64
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movl	%edi, -20(%rbp)
+	movq	%rsi, -32(%rbp)
+	cmpl	$1, -20(%rbp)
+	setg	%al
+	movzbl	%al, %eax
+	movl	%eax, -4(%rbp)
+	leaq	.LC0(%rip), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	cmpl	$0, -4(%rbp)
+	je	.L14
+	movl	$0, %eax
+	call	good_echo
+	jmp	.L15
+.L14:
+	movl	$0, %eax
+	call	echo
+.L15:
+	movl	$0, %eax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE9:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
+	.section	.note.GNU-stack,"",@progbits
+	.section	.note.gnu.property,"a"
+	.align 8
+	.long	1f - 0f
+	.long	4f - 1f
+	.long	5
+0:
+	.string	"GNU"
+1:
+	.align 8
+	.long	0xc0000002
+	.long	3f - 2f
+2:
+	.long	0x3
+3:
+	.align 8
+4:
